@@ -1,0 +1,38 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace p01_Phonebook
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Dictionary<string, string> phoneBook = new Dictionary<string, string>();
+            string cmnd = "";
+            do
+            {
+                cmnd = ProcessCmnd(phoneBook);
+            } while (! ("end".Equals(cmnd)));
+        }
+
+        static string ProcessCmnd(Dictionary<string, string> phoneBook)
+        {
+            var strArr = Console.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToArray();
+            string cmnd = strArr[0].ToLower();
+            switch (cmnd)
+            {
+                case "a": phoneBook[strArr[1]] = strArr[2];
+                    break;
+                case "s": bool found = phoneBook.TryGetValue(strArr[1], out string phone);
+                    if (found)
+                    {
+                        Console.WriteLine($"{strArr[1]} -> {phone}");
+                    }
+                    else Console.WriteLine($"Contact {strArr[1]} does not exist.");
+                    break;
+            }
+            return cmnd;
+        }
+    }
+}
